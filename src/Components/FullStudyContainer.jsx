@@ -4,9 +4,9 @@ import { Badge, Card } from "react-bootstrap"
 
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
-const useFullStudyDataContainer = ({ selectedId }) => {
+const useFullStudyDataContainer = () => {
   const { state } = useClinicalDataContext()
-  const { query } = state
+  const { query, selectedId } = state
 
   const [clinicalData, setClinicalData] = useState([])
 
@@ -23,8 +23,8 @@ const useFullStudyDataContainer = ({ selectedId }) => {
 }
 
 
-export const FullStudyDataContainer = ({ selectedId }) => {
-  const { clinicalData } = useFullStudyDataContainer({ selectedId })
+export const FullStudyDataContainer = () => {
+  const { clinicalData } = useFullStudyDataContainer()
   if (!clinicalData) return null
   return (
     <>

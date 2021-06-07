@@ -12,6 +12,8 @@ const ClinicalDataReducer = (state, action) => {
   switch (action.type) {
     case "SET_QUERY":
       return { ...state, query: action.query }
+    case "SET_SELECTED_ID":
+      return { ...state, selectedId: action.selectedId }
     default:
       break;
   }

@@ -24,8 +24,10 @@ const useStudyFieldsContainer = () => {
   }
 }
 
-export function StudyFieldsContainer({ selectedId, onSelect }) {
+export function StudyFieldsContainer() {
   const { data } = useStudyFieldsContainer()
+  const { state, dispatch } = useClinicalDataContext()
+  const { selectedId } = state
 
   return (
     <>
@@ -41,7 +43,9 @@ export function StudyFieldsContainer({ selectedId, onSelect }) {
                 cursor: "pointer",
                 backgroundColor: studyData.NCTId[0] === selectedId ? "#20c997" : null
               }}
-              onClick={(event) => onSelect(studyData.NCTId[0])}
+              onClick={(event) => {
+                return dispatch({ type: "SET_SELECTED_ID", selectedId: studyData.NCTId[0] })
+              }}
             >
               {title}
             </Card.Title>
