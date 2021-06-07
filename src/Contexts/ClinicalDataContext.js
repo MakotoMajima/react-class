@@ -11,7 +11,7 @@ const ClinicalDataContext = createContext(initialState)
 const ClinicalDataReducer = (state, action) => {
   switch (action.type) {
     case "SET_QUERY":
-      return { ...state, query: action.query }
+      return { ...state, query: action.query, selectedId: null }
     case "SELECT_STUDY":
       return { ...state, selectedId: action.selectedId }
     default:
