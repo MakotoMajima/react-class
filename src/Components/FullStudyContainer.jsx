@@ -33,7 +33,10 @@ export const FullStudyDataContainer = () => {
         const title = studyData.Study.ProtocolSection.IdentificationModule.BriefTitle
         const summary = studyData.Study.ProtocolSection.DescriptionModule.BriefSummary
         const description = studyData.Study.ProtocolSection.DescriptionModule.DetailedDescription
-        const keywords = studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword
+        const keywords = studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword === undefined ? 
+          []
+          :
+          studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword
 
         return <div key={title}>
           <Card style={{ margin: "8px" }} border="primary">
