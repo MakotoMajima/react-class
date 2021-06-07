@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Row, Col, Form, Navbar } from "react-bootstrap"
+import { Button, Col, Form } from "react-bootstrap"
 
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
-const useSearchQueryForm = ({ onSubmit }) => {
+const useSearchQueryForm = (props) => {
   const { dispatch } = useClinicalDataContext()
   const handleSubmit = (event) => {
     event.preventDefault()

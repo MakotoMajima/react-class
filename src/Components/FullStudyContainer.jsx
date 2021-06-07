@@ -24,13 +24,17 @@ const useFullStudyDataContainer = ({ selectedId }) => {
 
 
 export const FullStudyDataContainer = ({ selectedId }) => {
-  const { query, clinicalData } = useFullStudyDataContainer({ selectedId })
+  const { clinicalData } = useFullStudyDataContainer({ selectedId })
   if (!clinicalData) return null
   return (
     <>
       <h2>Full Studies</h2>
       {clinicalData.map(studyData => {
         const title = studyData.Study.ProtocolSection.IdentificationModule.BriefTitle
+        const summary = studyData.Study.ProtocolSection.DescriptionModule.BriefSummary
+        const description = studyData.Study.ProtocolSection.DescriptionModule.DetailedDescription
+        const keywords = studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword
+
         return <div key={title}>
           <Card style={{ margin: "8px" }} border="primary">
             <Card.Title style={{ margin: "0", padding: "0 8px" }}>
@@ -38,13 +42,13 @@ export const FullStudyDataContainer = ({ selectedId }) => {
             </Card.Title>
             <Card.Body>
               <h6>
-                {studyData.Study.ProtocolSection.DescriptionModule.BriefSummary}
+                {summary}
               </h6>
               <Card.Text>
-                {studyData.Study.ProtocolSection.DescriptionModule.DetailedDescription}
+                {description}
               </Card.Text>
               <p>
-                {studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword.map(
+                {keywords.map(
                   keyword => <Badge key={keyword} pill variant="success" style={{ marginRight: "8px" }}>{keyword}</Badge>
                 )}
               </p>

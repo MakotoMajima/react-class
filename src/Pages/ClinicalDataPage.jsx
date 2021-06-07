@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Button, Row, Col, Form, Navbar } from "react-bootstrap"
+import { Row, Col, Navbar } from "react-bootstrap"
 
 import { SearchQueryForm } from "src/Components/SearchQueryForm"
 import { FullStudyDataContainer } from "src/Components/FullStudyContainer"
@@ -7,7 +7,6 @@ import { StudyFieldsContainer } from "src/Components/StudyFieldsContainer"
 
 const useClinicalDataPage = () => {
   const [selectedId, setSelectedId] = useState(null)
-
 
   const selectStudy = (studyId) => setSelectedId(studyId)
   return {
@@ -38,8 +37,6 @@ export const ClinicalDataPage = (props) => {
           />
         </Col>
       </Row>
-
-
     </>
   )
 }
