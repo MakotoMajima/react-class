@@ -11,11 +11,19 @@ const useFullStudyDataContainer = () => {
   const [clinicalData, setClinicalData] = useState([])
 
   useEffect(() => {
+    // console.log(`query: ${query}`)
+    // console.log(`selectedId: ${selectedId}`)
     if (!query) return
     const expr = selectedId ?? query
     const params = { expr, min_rnk: 1, fmt: "json" }
     axios.get(`https://clinicaltrials.gov/api/query/full_studies`, { params })
-      .then(({ data }) => setClinicalData(data.FullStudiesResponse.FullStudies))
+      .then(({ data }) => {
+          const studies = data.FullStudiesResponse.FullStudies === undefined ?
+            []
+            :
+            data.FullStudiesResponse.FullStudies
+          setClinicalData(studies)
+        })
 
   }, [query, selectedId])
 

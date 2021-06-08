@@ -15,7 +15,13 @@ const useStudyFieldsContainer = () => {
 
     const params = { expr: query, min_rnk: 1, fields: "NCTId,BriefTitle,BriefSummary,Keyword", fmt: "json" }
     axios.get(`https://clinicaltrials.gov/api/query/study_fields`, { params })
-      .then(({ data }) => setData(data.StudyFieldsResponse.StudyFields))
+      .then(({ data }) => {
+        const studies = data.StudyFieldsResponse.StudyFields === undefined ?
+        []
+        :
+        data.StudyFieldsResponse.StudyFields
+        setData(studies)
+      })
   }, [query])
 
 
@@ -44,7 +50,7 @@ export function StudyFieldsContainer() {
                 backgroundColor: studyData.NCTId[0] === selectedId ? "#20c997" : null
               }}
               onClick={(event) => {
-                return dispatch({ type: "SET_SELECTED_ID", selectedId: studyData.NCTId[0] })
+                dispatch({ type: "SET_SELECTED_ID", selectedId: studyData.NCTId[0] })
               }}
             >
               {title}
