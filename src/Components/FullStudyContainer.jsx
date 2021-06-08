@@ -4,18 +4,26 @@ import { Badge, Card } from "react-bootstrap"
 
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
-const useFullStudyDataContainer = ({ selectedId }) => {
+const useFullStudyDataContainer = () => {
   const { state } = useClinicalDataContext()
-  const { query } = state
+  const { query, selectedId } = state
 
   const [clinicalData, setClinicalData] = useState([])
 
   useEffect(() => {
+    // console.log(`query: ${query}`)
+    // console.log(`selectedId: ${selectedId}`)
     if (!query) return
     const expr = selectedId ?? query
     const params = { expr, min_rnk: 1, fmt: "json" }
     axios.get(`https://clinicaltrials.gov/api/query/full_studies`, { params })
-      .then(({ data }) => setClinicalData(data.FullStudiesResponse.FullStudies))
+      .then(({ data }) => {
+          const studies = data.FullStudiesResponse.FullStudies === undefined ?
+            []
+            :
+            data.FullStudiesResponse.FullStudies
+          setClinicalData(studies)
+        })
 
   }, [query, selectedId])
 
@@ -23,8 +31,8 @@ const useFullStudyDataContainer = ({ selectedId }) => {
 }
 
 
-export const FullStudyDataContainer = ({ selectedId }) => {
-  const { clinicalData } = useFullStudyDataContainer({ selectedId })
+export const FullStudyDataContainer = () => {
+  const { clinicalData } = useFullStudyDataContainer()
   if (!clinicalData) return null
   return (
     <>
@@ -33,7 +41,10 @@ export const FullStudyDataContainer = ({ selectedId }) => {
         const title = studyData.Study.ProtocolSection.IdentificationModule.BriefTitle
         const summary = studyData.Study.ProtocolSection.DescriptionModule.BriefSummary
         const description = studyData.Study.ProtocolSection.DescriptionModule.DetailedDescription
-        const keywords = studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword
+        const keywords = studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword === undefined ? 
+          []
+          :
+          studyData.Study?.ProtocolSection?.ConditionsModule?.KeywordList?.Keyword
 
         return <div key={title}>
           <Card style={{ margin: "8px" }} border="primary">
