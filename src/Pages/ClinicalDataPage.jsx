@@ -5,17 +5,8 @@ import { SearchQueryForm } from "src/Components/SearchQueryForm"
 import { FullStudyDataContainer } from "src/Components/FullStudyContainer"
 import { StudyFieldsContainer } from "src/Components/StudyFieldsContainer"
 
-const useClinicalDataPage = () => {
-  const [selectedId, setSelectedId] = useState(null)
 
-  const selectStudy = (studyId) => setSelectedId(studyId)
-  return {
-    selectedId, selectStudy
-  }
-}
-
-export const ClinicalDataPage = (props) => {
-  const { selectedId, selectStudy } = useClinicalDataPage()
+export const ClinicalDataPage = (props) => { 
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -26,15 +17,10 @@ export const ClinicalDataPage = (props) => {
       <SearchQueryForm />
       <Row>
         <Col>
-          <FullStudyDataContainer
-            selectedId={selectedId}
-          />
+          <FullStudyDataContainer />
         </Col>
         <Col>
-          <StudyFieldsContainer
-            selectedId={selectedId}
-            onSelect={selectStudy}
-          />
+          <StudyFieldsContainer />
         </Col>
       </Row>
     </>

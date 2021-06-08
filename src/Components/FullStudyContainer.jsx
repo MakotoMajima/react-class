@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import { Badge, Card } from "react-bootstrap"
 
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
-const useFullStudyDataContainer = ({ selectedId }) => {
+const useFullStudyDataContainer = () => {
   const { state } = useClinicalDataContext()
-  const { query } = state
+  const { query, selectedId } = state
 
   const [clinicalData, setClinicalData] = useState([])
 
