@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios"
 
 import { Badge, Card } from "react-bootstrap"
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
-const useStudyFieldsContainer = () => {
-  const { state } = useClinicalDataContext()
-  const { query } = state
-
+const useStudyFieldsContainer = (query) => {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -24,8 +21,15 @@ const useStudyFieldsContainer = () => {
   }
 }
 
-export function StudyFieldsContainer({ selectedId, onSelect }) {
-  const { data } = useStudyFieldsContainer()
+export function StudyFieldsContainer() {
+  const { state, dispatch } = useClinicalDataContext()
+  const { query, selectedId } = state
+  const { data } = useStudyFieldsContainer(query)
+
+  const handleSelect = (clickId) => {
+    console.log("handleselect")
+    dispatch({ type: "SET_SELECTED_ID", selectedId: clickId })
+  }
 
   return (
     <>
@@ -41,7 +45,7 @@ export function StudyFieldsContainer({ selectedId, onSelect }) {
                 cursor: "pointer",
                 backgroundColor: studyData.NCTId[0] === selectedId ? "#20c997" : null
               }}
-              onClick={(event) => onSelect(studyData.NCTId[0])}
+              onClick={() => handleSelect(studyData.NCTId[0]) }
             >
               {title}
             </Card.Title>
