@@ -4,9 +4,9 @@ import { Badge, Card } from "react-bootstrap"
 
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
-const useFullStudyDataContainer = ({ selectedId }) => {
+const useFullStudyDataContainer = () => {
   const { state } = useClinicalDataContext()
-  const { query } = state
+  const { query, selectedId } = state
 
   const [clinicalData, setClinicalData] = useState([])
 
@@ -48,7 +48,7 @@ export const FullStudyDataContainer = ({ selectedId }) => {
                 {description}
               </Card.Text>
               <p>
-                {keywords.map(
+                {keywords && keywords.map(
                   keyword => <Badge key={keyword} pill variant="success" style={{ marginRight: "8px" }}>{keyword}</Badge>
                 )}
               </p>

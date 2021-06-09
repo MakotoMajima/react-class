@@ -5,8 +5,8 @@ import { Badge, Card } from "react-bootstrap"
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
 const useStudyFieldsContainer = () => {
-  const { state } = useClinicalDataContext()
-  const { query } = state
+  const { state, dispatch } = useClinicalDataContext()
+  const { query, selectedId } = state
 
   const [data, setData] = useState([])
 
@@ -19,13 +19,17 @@ const useStudyFieldsContainer = () => {
   }, [query])
 
 
+  const handleSelect = (selectedId) => {
+    dispatch({ type: "SELECT_STUDY", selectedId })
+  }
+
   return {
-    data
+    data, selectedId, handleSelect
   }
 }
 
-export function StudyFieldsContainer({ selectedId, onSelect }) {
-  const { data } = useStudyFieldsContainer()
+export function StudyFieldsContainer(props) {
+  const { data, selectedId, handleSelect } = useStudyFieldsContainer()
 
   return (
     <>
@@ -41,7 +45,7 @@ export function StudyFieldsContainer({ selectedId, onSelect }) {
                 cursor: "pointer",
                 backgroundColor: studyData.NCTId[0] === selectedId ? "#20c997" : null
               }}
-              onClick={(event) => onSelect(studyData.NCTId[0])}
+              onClick={(event) => handleSelect(studyData.NCTId[0])}
             >
               {title}
             </Card.Title>
