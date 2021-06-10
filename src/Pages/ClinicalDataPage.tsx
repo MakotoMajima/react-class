@@ -1,11 +1,15 @@
-import React from "react"
+import React, { VFC } from "react"
 import { Row, Col, Navbar } from "react-bootstrap"
 
 import { SearchQueryForm } from "src/Components/SearchQueryForm"
 import { FullStudyDataContainer } from "src/Components/FullStudyContainer"
 import { StudyFieldsContainer } from "src/Components/StudyFieldsContainer"
 
-export const ClinicalDataPage = (props) => {
+type ClinicalDataPageProps = {
+
+}
+
+export const ClinicalDataPage: VFC<ClinicalDataPageProps> = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -19,7 +23,7 @@ export const ClinicalDataPage = (props) => {
           <FullStudyDataContainer />
         </Col>
         <Col>
-          <StudyFieldsContainer />
+          <StudyFieldsContainer containerTitle="Study Fields" />
         </Col>
       </Row>
     </>

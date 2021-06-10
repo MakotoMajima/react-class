@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { VFC, useState, useEffect } from 'react'
 import axios from "axios"
 
 import { Badge, Card } from "react-bootstrap"
 import { useClinicalDataContext } from "src/Contexts/ClinicalDataContext"
 
+type StudyFieldData = {
+  BriefTitle: string
+  BriefSummary: string
+  NCTId: string[]
+  Keyword: string[]
+}
+
 const useStudyFieldsContainer = () => {
   const { state, dispatch } = useClinicalDataContext()
   const { query, selectedId } = state
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState<StudyFieldData[]>([])
 
   useEffect(() => {
     if (!query) return
@@ -19,7 +26,7 @@ const useStudyFieldsContainer = () => {
   }, [query])
 
 
-  const handleSelect = (selectedId) => {
+  const handleSelect = (selectedId: string) => {
     dispatch({ type: "SELECT_STUDY", selectedId })
   }
 
@@ -28,12 +35,18 @@ const useStudyFieldsContainer = () => {
   }
 }
 
-export function StudyFieldsContainer(props) {
+
+type StudyFieldsContainerProps = {
+  containerTitle: string
+}
+
+
+export const StudyFieldsContainer: VFC<StudyFieldsContainerProps> = ({ containerTitle }) => {
   const { data, selectedId, handleSelect } = useStudyFieldsContainer()
 
   return (
     <>
-      <h2>Study Fields</h2>
+      <h2>{containerTitle}</h2>
       {data.map(studyData => {
         const title = studyData.BriefTitle
         return <div key={title}>
@@ -43,9 +56,9 @@ export function StudyFieldsContainer(props) {
                 margin: "0",
                 padding: "0 8px",
                 cursor: "pointer",
-                backgroundColor: studyData.NCTId[0] === selectedId ? "#20c997" : null
+                backgroundColor: studyData.NCTId[0] === selectedId ? "#20c997" : undefined
               }}
-              onClick={(event) => handleSelect(studyData.NCTId[0])}
+              onClick={() => handleSelect(studyData.NCTId[0])}
             >
               {title}
             </Card.Title>

@@ -23,8 +23,8 @@ const useFullStudyDataContainer = () => {
 }
 
 
-export const FullStudyDataContainer = ({ selectedId }) => {
-  const { clinicalData } = useFullStudyDataContainer({ selectedId })
+export const FullStudyDataContainer = () => {
+  const { clinicalData } = useFullStudyDataContainer()
   if (!clinicalData) return null
   return (
     <>
